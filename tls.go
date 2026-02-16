@@ -422,6 +422,10 @@ func Server(ctx context.Context, conn net.Conn, config *Config) (*Conn, error) {
 					}
 				}
 				time.Sleep(5 * time.Second)
+				if maxUseless, ok := GlobalMaxCSSMsgCount.Load(key); ok {
+					hs.c.MaxUselessRecords = maxUseless.(int)
+				}
+
 			}
 			hs.c.isHandshakeComplete.Store(true)
 			break
